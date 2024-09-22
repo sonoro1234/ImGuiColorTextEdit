@@ -4,9 +4,11 @@
 #include <regex>
 #include <cmath>
 
-#include "TextEditor.h"
-
+#ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
+#endif
+
+#include "TextEditor.h"
 #include "imgui.h" // for imGui::GetCurrentWindow()
 
 // TODO
@@ -723,57 +725,57 @@ void TextEditor::HandleKeyboardInputs()
 		io.WantCaptureKeyboard = true;
 		io.WantTextInput = true;
 
-		if (!IsReadOnly() && isShortcut && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Z)))
+		if (!IsReadOnly() && isShortcut && ImGui::IsKeyPressed(ImGuiKey_Z))
 			Undo();
-		else if (!IsReadOnly() && isAltOnly && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Backspace)))
+		else if (!IsReadOnly() && isAltOnly && ImGui::IsKeyPressed(ImGuiKey_Backspace))
 			Undo();
-		else if (!IsReadOnly() && isShortcut && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Y)))
+		else if (!IsReadOnly() && isShortcut && ImGui::IsKeyPressed(ImGuiKey_Y))
 			Redo();
-		else if (!IsReadOnly() && isShiftShortcut && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Z)))
+		else if (!IsReadOnly() && isShiftShortcut && ImGui::IsKeyPressed(ImGuiKey_Z))
 			Redo();
-		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow)))
+		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGuiKey_UpArrow))
 			MoveUp(1, shift);
-		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_DownArrow)))
+		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGuiKey_DownArrow))
 			MoveDown(1, shift);
-		else if ((isOSX ? !ctrl : !alt) && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_LeftArrow)))
+		else if ((isOSX ? !ctrl : !alt) && !super && ImGui::IsKeyPressed(ImGuiKey_LeftArrow))
 			MoveLeft(1, shift, isWordmoveKey);
-		else if ((isOSX ? !ctrl : !alt) && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_RightArrow)))
+		else if ((isOSX ? !ctrl : !alt) && !super && ImGui::IsKeyPressed(ImGuiKey_RightArrow))
 			MoveRight(1, shift, isWordmoveKey);
-		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_PageUp)))
+		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGuiKey_PageUp))
 			MoveUp(GetPageSize() - 4, shift);
-		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_PageDown)))
+		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed((ImGuiKey_PageDown)))
 			MoveDown(GetPageSize() - 4, shift);
-		else if (ctrl && !alt && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Home)))
+		else if (ctrl && !alt && !super && ImGui::IsKeyPressed((ImGuiKey_Home)))
 			MoveTop(shift);
-		else if (ctrl && !alt && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_End)))
+		else if (ctrl && !alt && !super && ImGui::IsKeyPressed((ImGuiKey_End)))
 			MoveBottom(shift);
-		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Home)))
+		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed((ImGuiKey_Home)))
 			MoveHome(shift);
-		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_End)))
+		else if (!alt && !ctrl && !super && ImGui::IsKeyPressed((ImGuiKey_End)))
 			MoveEnd(shift);
-		else if (!IsReadOnly() && !alt && !ctrl && !shift && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Delete)))
+		else if (!IsReadOnly() && !alt && !ctrl && !shift && !super && ImGui::IsKeyPressed((ImGuiKey_Delete)))
 			Delete();
-		else if (!IsReadOnly() && !alt && !ctrl && !shift && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Backspace)))
+		else if (!IsReadOnly() && !alt && !ctrl && !shift && !super && ImGui::IsKeyPressed((ImGuiKey_Backspace)))
 			Backspace();
-		else if (!alt && !ctrl && !shift && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Insert)))
+		else if (!alt && !ctrl && !shift && !super && ImGui::IsKeyPressed((ImGuiKey_Insert)))
 			mOverwrite ^= true;
-		else if (isCtrlOnly && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Insert)))
+		else if (isCtrlOnly && ImGui::IsKeyPressed((ImGuiKey_Insert)))
 			Copy();
-		else if (isShortcut && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_C)))
+		else if (isShortcut && ImGui::IsKeyPressed((ImGuiKey_C)))
 			Copy();
-		else if (!IsReadOnly() && isShiftOnly && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Insert)))
+		else if (!IsReadOnly() && isShiftOnly && ImGui::IsKeyPressed((ImGuiKey_Insert)))
 			Paste();
-		else if (!IsReadOnly() && isShortcut && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_V)))
+		else if (!IsReadOnly() && isShortcut && ImGui::IsKeyPressed((ImGuiKey_V)))
 			Paste();
-		else if (isShortcut && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_X)))
+		else if (isShortcut && ImGui::IsKeyPressed((ImGuiKey_X)))
 			Cut();
-		else if (isShiftOnly && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Delete)))
+		else if (isShiftOnly && ImGui::IsKeyPressed((ImGuiKey_Delete)))
 			Cut();
-		else if (isShortcut && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_A)))
+		else if (isShortcut && ImGui::IsKeyPressed((ImGuiKey_A)))
 			SelectAll();
-		else if (!IsReadOnly() && !alt && !ctrl && !shift && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Enter)))
+		else if (!IsReadOnly() && !alt && !ctrl && !shift && !super && ImGui::IsKeyPressed((ImGuiKey_Enter)))
 			EnterCharacter('\n', false);
-		else if (!IsReadOnly() && !alt && !ctrl && !super && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Tab)))
+		else if (!IsReadOnly() && !alt && !ctrl && !super && ImGui::IsKeyPressed((ImGuiKey_Tab)))
 			EnterCharacter('\t', shift);
 		if (!IsReadOnly() && !io.InputQueueCharacters.empty() && !ctrl && !super)
 		{
@@ -880,7 +882,7 @@ void TextEditor::Render()
 
 	assert(mLineBuffer.empty());
 
-	auto contentSize = ImGui::GetWindowContentRegionMax();
+	auto contentSize =  ImGui::GetContentRegionAvail() + ImGui::GetCursorPos();//ImGui::GetWindowContentRegionMax();
 	auto drawList = ImGui::GetWindowDrawList();
 	float longest(mTextStart);
 
@@ -1122,7 +1124,7 @@ void TextEditor::Render()
 			if (local.x >= mTextStart)
 			{
 				auto pos = ScreenPosToCoordinates(mpos);
-				printf("Coord(%d, %d)\n", pos.mLine, pos.mColumn);
+				//printf("Coord(%d, %d)\n", pos.mLine, pos.mColumn);
 				auto id = GetWordAt(pos);
 				if (!id.empty())
 				{
@@ -1173,7 +1175,7 @@ void TextEditor::Render(const char* aTitle, const ImVec2& aSize, bool aBorder)
 	if (mHandleKeyboardInputs)
 	{
 		HandleKeyboardInputs();
-		ImGui::PushAllowKeyboardFocus(true);
+		ImGui::PushItemFlag(ImGuiItemFlags_NoTabStop, false);
 	}
 
 	if (mHandleMouseInputs)
@@ -1183,7 +1185,7 @@ void TextEditor::Render(const char* aTitle, const ImVec2& aSize, bool aBorder)
 	Render();
 
 	if (mHandleKeyboardInputs)
-		ImGui::PopAllowKeyboardFocus();
+		ImGui::PopItemFlag();
 
 	if (!mIgnoreImGuiChild)
 		ImGui::EndChild();
